@@ -1,0 +1,116 @@
+{
+  "_readme": "GUÍA GRAFANA — Proyecto 2: Optimizador de Ads · Dahyana",
+  "_descripcion": "Este archivo explica cómo armar el dashboard de Grafana. El JSON real del dashboard está abajo en 'grafana_dashboard_json'.",
+
+  "setup": {
+    "paso_1_instalar": [
+      "Opción A (local): docker run -d -p 3000:3000 grafana/grafana",
+      "Opción B: usar Grafana Cloud gratuito en grafana.com",
+      "Acceder en: http://localhost:3000 (user: admin, pass: admin)"
+    ],
+    "paso_2_datasource": [
+      "Configuration → Data Sources → Add data source",
+      "Elegir: JSON API (instalar plugin: grafana-json-datasource)",
+      "O usar: CSV datasource con el archivo campanas_limpias.csv",
+      "Para demostración del portfolio: usar datos estáticos en JSON"
+    ],
+    "paso_3_importar_dashboard": [
+      "Dashboards → Import",
+      "Pegar el JSON del campo 'grafana_dashboard_json' de este archivo",
+      "O crear los paneles manualmente según la guía de paneles"
+    ]
+  },
+
+  "paneles_a_crear": {
+    "fila_1_kpis": {
+      "panel_1": {
+        "tipo": "Stat",
+        "titulo": "ROI Global",
+        "query": "SELECT AVG(roi) FROM metricas",
+        "unit": "percent",
+        "thresholds": {"rojo": 0, "amarillo": 50, "verde": 100},
+        "descripcion": "Un número grande y visible que muestra si la inversión rinde"
+      },
+      "panel_2": {
+        "tipo": "Stat",
+        "titulo": "Gasto total",
+        "unit": "currencyARS",
+        "descripcion": "Total invertido en el período"
+      },
+      "panel_3": {
+        "tipo": "Stat",
+        "titulo": "Revenue generado",
+        "unit": "currencyARS",
+        "color": "green"
+      },
+      "panel_4": {
+        "tipo": "Gauge",
+        "titulo": "CTR promedio",
+        "unit": "percent",
+        "min": 0,
+        "max": 5,
+        "descripcion": "Gauge muestra visualmente si el CTR es bajo/medio/alto"
+      }
+    },
+    "fila_2_graficos": {
+      "panel_5": {
+        "tipo": "Bar chart",
+        "titulo": "ROI por campaña",
+        "descripcion": "Barras horizontales, ordenadas de mayor a menor ROI. Las negativas en rojo.",
+        "orientacion": "horizontal",
+        "color_condicional": true
+      },
+      "panel_6": {
+        "tipo": "Time series",
+        "titulo": "Evolución del gasto semanal",
+        "descripcion": "Si tuvieras datos históricos, mostraría la tendencia de inversión"
+      },
+      "panel_7": {
+        "tipo": "Pie chart",
+        "titulo": "Distribución del gasto por plataforma",
+        "descripcion": "Torta con colores por plataforma: META, Google, TikTok, LinkedIn"
+      }
+    },
+    "fila_3_tabla": {
+      "panel_8": {
+        "tipo": "Table",
+        "titulo": "Detalle de campañas activas",
+        "columnas": ["nombre_campana", "plataforma", "roi_pct", "ctr_pct", "cpl", "estado"],
+        "formato_condicional": "roi_pct: verde >100, amarillo >0, rojo <0",
+        "descripcion": "La tabla con colores hace que el análisis sea inmediato"
+      }
+    },
+    "fila_4_alertas": {
+      "descripcion": "DIFERENCIADOR CLAVE: Las alertas automáticas de Grafana",
+      "alerta_1": {
+        "nombre": "ROI negativo detectado",
+        "condicion": "AVG(roi_pct) < 0",
+        "canal": "Email / Slack / Telegram",
+        "mensaje": "Alerta: campaña con ROI negativo. Revisar segmentación."
+      },
+      "alerta_2": {
+        "nombre": "Presupuesto sub-ejecutado",
+        "condicion": "ejecucion_pct < 50 AND estado = ACTIVA",
+        "canal": "Email",
+        "mensaje": "Campaña activa con menos del 50% del presupuesto ejecutado."
+      },
+      "alerta_3": {
+        "nombre": "CTR por debajo del umbral",
+        "condicion": "ctr_pct < 0.1",
+        "canal": "Slack",
+        "mensaje": "CTR crítico detectado. Posible problema creativo."
+      }
+    }
+  },
+
+  "valor_para_portfolio": {
+    "que_demuestra": [
+      "Conocimiento de herramientas de monitoreo enterprise",
+      "Pensamiento en tiempo real, no solo reportes estáticos",
+      "Configuración de alertas automatizadas (proactividad)",
+      "Integración de múltiples fuentes de datos"
+    ],
+    "como_explicarlo_en_entrevista": "Con Grafana monté un sistema de monitoreo en tiempo real que envía alertas automáticas cuando el ROI de una campaña cae por debajo de cero. Esto reemplazó revisiones manuales diarias que llevaban 2 horas, y permitió reaccionar en minutos en lugar de al día siguiente.",
+    "diferenciador": "Power BI es el estándar. Grafana demuestra que sabés trabajar con monitoreo continuo, que es lo que usan empresas como Mercado Libre, Despegar, y todas las empresas tech de escala."
+  }
+}

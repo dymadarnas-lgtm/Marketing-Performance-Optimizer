@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte Ads Optimizer — Dahyana</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+  :root {
+    --bg: #0a0c10;
+    --s1: #111318;
+    --s2: #181b22;
+    --bdr: #1f2330;
+    --acc: #7c6ef7;
+    --acc2: #f7c26e;
+    --acc3: #5cd9a8;
+    --danger: #f25c5c;
+    --txt: #dde3f0;
+    --muted: #596070;
+    --mono: 'DM Sans', sans-serif;
+    --display: 'Syne', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--txt); font-family: var(--mono); padding: 44px 28px; min-height: 100vh; }
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  /* ── Header ── */
+  .hdr { margin-bottom: 52px; }
+  .hdr-eyebrow { font-family: var(--display); font-size: 11px; letter-spacing: 4px; color: var(--acc); text-transform: uppercase; margin-bottom: 10px; }
+  .hdr h1 { font-family: var(--display); font-size: clamp(26px, 4.5vw, 42px); font-weight: 800; line-height: 1.1; margin-bottom: 8px; }
+  .hdr h1 span { color: var(--acc2); }
+  .hdr-sub { color: var(--muted); font-size: 14px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .pill { padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 500; letter-spacing: .5px; border: 1px solid; }
+  .pill-p { color: var(--acc); border-color: rgba(124,110,247,.3); background: rgba(124,110,247,.08); }
+  .pill-g { color: var(--acc2); border-color: rgba(247,194,110,.3); background: rgba(247,194,110,.08); }
+  .pill-t { color: var(--acc3); border-color: rgba(92,217,168,.3); background: rgba(92,217,168,.08); }
+
+  /* ── KPIs ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap: 14px; margin-bottom: 52px; }
+  .kpi { background: var(--s1); border: 1px solid var(--bdr); border-radius: 12px; padding: 22px 20px; position: relative; overflow: hidden; }
+  .kpi::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+  .kpi.v::after { background: var(--acc3); }
+  .kpi.p::after { background: var(--acc); }
+  .kpi.g::after { background: var(--acc2); }
+  .kpi.r::after { background: var(--danger); }
+  .kpi .lbl { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .kpi .val { font-family: var(--display); font-size: 30px; font-weight: 700; line-height: 1; }
+  .kpi.v .val { color: var(--acc3); }
+  .kpi.p .val { color: var(--acc); }
+  .kpi.g .val { color: var(--acc2); }
+  .kpi.r .val { color: var(--danger); }
+  .kpi .detail { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+  /* ── Sección ── */
+  .sec { margin-bottom: 44px; }
+  .sec-title { font-family: var(--display); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--acc); margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--bdr); }
+
+  /* ── Tabla ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--bdr); }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--bdr); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,.02); }
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 600; letter-spacing: .3px; }
+  .b-g { background: rgba(92,217,168,.12); color: var(--acc3); border: 1px solid rgba(92,217,168,.25); }
+  .b-y { background: rgba(247,194,110,.12); color: var(--acc2); border: 1px solid rgba(247,194,110,.25); }
+  .b-r { background: rgba(242,92,92,.12); color: var(--danger); border: 1px solid rgba(242,92,92,.25); }
+  .b-p { background: rgba(124,110,247,.12); color: var(--acc); border: 1px solid rgba(124,110,247,.25); }
+
+  /* ── Funnel bars ── */
+  .funnel { display: flex; flex-direction: column; gap: 6px; }
+  .f-row { display: grid; grid-template-columns: 130px 1fr 90px; align-items: center; gap: 12px; }
+  .f-lbl { font-size: 12px; color: var(--muted); }
+  .f-track { background: var(--s2); border-radius: 4px; height: 10px; overflow: hidden; }
+  .f-fill { height: 100%; border-radius: 4px; }
+  .f-num { font-family: var(--display); font-size: 12px; text-align: right; }
+
+  /* ── Herramientas stack ── */
+  .stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px; }
+  .tool-card { background: var(--s1); border: 1px solid var(--bdr); border-radius: 12px; padding: 20px; }
+  .tool-name { font-family: var(--display); font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .tool-role { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .tool-items { font-size: 12px; line-height: 1.8; color: var(--txt); }
+  .tool-highlight { display: inline-block; margin-top: 8px; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; background: rgba(124,110,247,.15); color: var(--acc); }
+
+  /* ── Conclusión ── */
+  .conclusion { background: var(--s1); border: 1px solid var(--bdr); border-left: 3px solid var(--acc3); border-radius: 12px; padding: 28px; font-size: 14px; line-height: 1.75; }
+  .conclusion strong { color: var(--acc3); }
+  .impact-box { margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .impact-item { background: var(--s2); border: 1px solid var(--bdr); border-radius: 8px; padding: 14px 16px; }
+  .impact-item .i-val { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--acc2); }
+  .impact-item .i-lbl { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* ── Footer ── */
+  .footer { margin-top: 52px; padding-top: 20px; border-top: 1px solid var(--bdr); display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); font-family: var(--display); letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="hdr">
+    <div class="hdr-eyebrow">Portfolio · Proyecto 02 · Marketing Analytics</div>
+    <h1>Optimizador de <span>Ads</span><br>& ROI Tracker</h1>
+    <div class="hdr-sub">Análisis de 20 campañas · Meta · Google · TikTok · LinkedIn · Automatización de reportes</div>
+    <div class="pill-row">
+      <span class="pill pill-p">Python</span>
+      <span class="pill pill-g">Power BI</span>
+      <span class="pill pill-t">Grafana</span>
+      <span class="pill pill-p">Meta Ads</span>
+      <span class="pill pill-g">Google Ads</span>
+      <span class="pill pill-t">ROI Analysis</span>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-grid">
+    <div class="kpi v">
+      <div class="lbl">ROI global</div>
+      <div class="val">253%</div>
+      <div class="detail">Por cada $1 invertido → $3,53</div>
+    </div>
+    <div class="kpi g">
+      <div class="lbl">Revenue generado</div>
+      <div class="val">$4.17M</div>
+      <div class="detail">20 campañas activas/finalizadas</div>
+    </div>
+    <div class="kpi p">
+      <div class="lbl">Gasto total</div>
+      <div class="val">$1.18M</div>
+      <div class="detail">Presupuesto ejecutado 98.2%</div>
+    </div>
+    <div class="kpi r">
+      <div class="lbl">Campañas a revisar</div>
+      <div class="val">2</div>
+      <div class="detail">ROI negativo detectado</div>
+    </div>
+  </div>
+
+  <!-- Rendimiento por plataforma -->
+  <div class="sec">
+    <div class="sec-title">Rendimiento por plataforma</div>
+    <table>
+      <thead>
+        <tr><th>Plataforma</th><th>Campañas</th><th>CTR %</th><th>Conv %</th><th>CPL</th><th>ROI %</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Google</td><td>7</td><td>0.68%</td><td>2.22%</td><td>$427</td><td>251.6%</td><td><span class="badge b-g">Excelente</span></td></tr>
+        <tr><td>Meta</td><td>7</td><td>1.41%</td><td>1.96%</td><td>$450</td><td>233.5%</td><td><span class="badge b-g">Excelente</span></td></tr>
+        <tr><td>TikTok</td><td>2</td><td>0.26%</td><td>0.75%</td><td>$648</td><td>131.4%</td><td><span class="badge b-y">Revisar</span></td></tr>
+        <tr><td>LinkedIn</td><td>1</td><td>1.26%</td><td>3.17%</td><td>$1.803</td><td>66.4%</td><td><span class="badge b-y">Revisar</span></td></tr>
+        <tr><td>DSP / Programmatic</td><td>1</td><td>0.04%</td><td>0.86%</td><td>$2.178</td><td>-31.1%</td><td><span class="badge b-r">Pausar</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Funnel -->
+  <div class="sec">
+    <div class="sec-title">Embudo de conversión — dónde se caen los usuarios</div>
+    <div class="funnel">
+      <div class="f-row">
+        <div class="f-lbl">Impresiones</div>
+        <div class="f-track"><div class="f-fill" style="width:100%; background:var(--acc);"></div></div>
+        <div class="f-num" style="color:var(--acc)">18.6M</div>
+      </div>
+      <div class="f-row">
+        <div class="f-lbl">Clics</div>
+        <div class="f-track"><div class="f-fill" style="width:6.7%; background:var(--acc2);"></div></div>
+        <div class="f-num" style="color:var(--acc2)">114.2K</div>
+      </div>
+      <div class="f-row">
+        <div class="f-lbl">Conversiones</div>
+        <div class="f-track"><div class="f-fill" style="width:1.4%; background:var(--acc3);"></div></div>
+        <div class="f-num" style="color:var(--acc3)">2.243</div>
+      </div>
+    </div>
+    <div style="margin-top:16px; font-size:12px; color:var(--muted); line-height:1.8;">
+      ▸ De cada 1.000 impresiones → solo 6 generan un clic (CTR 0.6%).<br>
+      ▸ De cada 100 clics → 2 generan una conversión (tasa 2.0%).<br>
+      ▸ El mayor drop ocurre entre impresiones y clics → oportunidad de mejora creativa.
+    </div>
+  </div>
+
+  <!-- Stack tecnológico -->
+  <div class="sec">
+    <div class="sec-title">Stack tecnológico del proyecto</div>
+    <div class="stack">
+      <div class="tool-card">
+        <div class="tool-name" style="color:var(--acc)">Python</div>
+        <div class="tool-role">Procesamiento y análisis</div>
+        <div class="tool-items">· Limpieza de datos de campañas<br>· Cálculo de ROI, CTR, CPL, CPC<br>· Análisis de funnel por plataforma<br>· Exportación automática</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name" style="color:var(--acc2)">Power BI</div>
+        <div class="tool-role">Dashboard interactivo</div>
+        <div class="tool-items">· Filtros por campaña y plataforma<br>· Visualización del funnel<br>· Medidas DAX para ROI dinámico<br>· Reporte PDF para cliente</div>
+      </div>
+      <div class="tool-card" style="border-color: rgba(92,217,168,.25);">
+        <div class="tool-name" style="color:var(--acc3)">Grafana</div>
+        <div class="tool-role">Monitoreo en tiempo real</div>
+        <div class="tool-items">· Dashboard live de campañas<br>· Alertas automáticas por ROI<br>· Notificaciones Slack/Email<br>· Sin intervención manual</div>
+        <div class="tool-highlight">Diferenciador de portfolio</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conclusión -->
+  <div class="sec">
+    <div class="sec-title">Conclusión ejecutiva</div>
+    <div class="conclusion">
+      El análisis de <strong>20 campañas publicitarias</strong> sobre Meta, Google, TikTok y LinkedIn reveló un ROI global del <strong>253%</strong>, pero con alta dispersión entre plataformas. Google y Meta lideran la eficiencia. Se identificaron 2 campañas con ROI negativo (<strong>Display Branding y Programmatic Display</strong>) que representan pérdida de inversión y deben pausarse o rediseñarse.
+      <br><br>
+      La implementación de <strong>Grafana con alertas automáticas</strong> eliminó la necesidad de revisiones manuales diarias, liberando tiempo de análisis estratégico.
+      <div class="impact-box">
+        <div class="impact-item">
+          <div class="i-val">12hs</div>
+          <div class="i-lbl">ahorradas por mes en reportes manuales</div>
+        </div>
+        <div class="impact-item">
+          <div class="i-val">2</div>
+          <div class="i-lbl">campañas con pérdida identificadas para pausar</div>
+        </div>
+        <div class="impact-item">
+          <div class="i-val">$2.99M</div>
+          <div class="i-lbl">ganancia neta sobre el gasto total</div>
+        </div>
+        <div class="impact-item">
+          <div class="i-val">&lt;5min</div>
+          <div class="i-lbl">tiempo de respuesta ante alertas de ROI negativo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>ADS_OPTIMIZER_v1.0 · Python + Power BI + Grafana</span>
+    <span>2023 · Dahyana</span>
+  </div>
+
+</div>
+</body>
+</html>
