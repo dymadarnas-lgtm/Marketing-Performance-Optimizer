@@ -1,6 +1,6 @@
 # OPTIMIZACIÓN DE ADS & ROI: PROYECTO CYGNUS STYLE 🚀
 
-![Dashboard de Performance](https://github.com/dymadarnas-lgtm/Marketing-Performance-Optimizer/blob/main/proyecto2_reporte_dahyana.png?raw=true)
+![Dashboard de Performance](https://github.com/dymadarnas-lgtm/Marketing-Performance-Optimizer/blob/main/dashboard_reporte_optimizador.png?raw=true)
 
 Este proyecto demuestra cómo transformar datos caóticos de múltiples plataformas publicitarias (Meta, Google, TikTok, LinkedIn) en decisiones estratégicas de inversión.
 
