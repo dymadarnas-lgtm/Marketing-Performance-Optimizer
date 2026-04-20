@@ -1,19 +1,27 @@
-Optimización de Ads & ROI: Proyecto Cygnus Style 🚀
-Este proyecto demuestra cómo transformar datos caóticos de múltiples plataformas publicitarias (Meta, Google, TikTok, LinkedIn) en decisiones estratégicas de inversión.
+# OPTIMIZACIÓN DE ADS & ROI: PROYECTO CYGNUS STYLE 
 
-El Problema (Contexto)
-Un cliente presentaba una alta dispersión en sus costos de adquisición y no lograba identificar qué campañas estaban generando pérdida de inversión debido a la falta de monitoreo en tiempo real.
+![Dashboard de Performance](https://github.com/dymadarnas-lgtm/Marketing-Performance-Optimizer/blob/main/dashboard_final.png?raw=true)
 
-¿Cómo lo resolví?
-Automatización: Diseñé un script en Python que consolida y limpia los datos de 20 campañas, ahorrando 12 horas mensuales de reportes manuales.
+Este proyecto demuestra cómo transformar datos caóticos de múltiples plataformas publicitarias (Meta, Google, TikTok, LinkedIn) en decisiones estratégicas de inversión y ahorro de presupuesto.
 
-Análisis Crítico: Identifiqué 2 campañas con ROI negativo, permitiendo pausar gastos ineficientes de inmediato.
+## EL PROBLEMA (CONTEXTO)
+En el sector de marketing digital, la dispersión de datos entre plataformas impide una visión clara del retorno. Un cliente presentaba una **alta dispersión en sus costos de adquisición** y no lograba identificar qué campañas generaban pérdida por la falta de monitoreo en tiempo real.
 
-Diferenciador: Implementé alertas automáticas en Grafana que notifican en menos de 5 minutos si el ROI de una campaña cae por debajo del umbral aceptable.
+## ¿CÓMO LO RESOLVÍ?
+* **AUTOMATIZACIÓN**: Diseñé un script en **Python** que consolida y limpia los datos de 20 campañas, logrando un ahorro de **12 horas mensuales** en reportes manuales.
+* **ANÁLISIS CRÍTICO**: Identifiqué 2 campañas con **ROI negativo**, permitiendo pausar gastos ineficientes de inmediato y mejorar el rendimiento global al **253%**.
+* **DIFERENCIADOR**: Implementé alertas automáticas en **Grafana** que notifican en menos de **5 minutos** si el rendimiento cae por debajo del umbral aceptable.
 
-Stack Tecnológico
-Python (Pandas): Procesamiento de embudos de conversión y cálculo de métricas (CTR, CPL, CPC).
+## STACK TECNOLÓGICO
+* **PYTHON (PANDAS)**: Procesamiento de embudos de conversión y cálculo de métricas (CTR, CPL, CPC).
+* **POWER BI**: Dashboard interactivo con filtros por campaña y visualización del funnel.
+* **GRAFANA**: Monitoreo de performance en tiempo real y alertas proactivas.
 
-Power BI: Dashboard interactivo con filtros por campaña y visualización del funnel.
+## ESTRUCTURA DEL REPO
+* `roi_funnel_analysis.py`: Script Python que limpia datos y calcula métricas de ROI.
+* `campanas_sucio.csv`: Set de datos con errores simulados para demostrar el proceso de limpieza.
+* `grafana_setup.json`: Configuración para replicar el sistema de alertas automáticas.
+* `reporte_final.html`: Resumen ejecutivo visual con las conclusiones clave del proyecto.
 
-Grafana: Monitoreo de performance en tiempo real y alertas proactivas.
+---
+*Este proyecto fue parte de mi experiencia técnica optimizando inversiones en el sector de Growth Marketing.*
